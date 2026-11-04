@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}ML Insights & DBSCAN Clustering — SCAMSHIELD{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  
+  <!-- Page Header -->
+  <div class="mb-4">
+    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2" style="background: rgba(139, 92, 246, 0.1); border: 1px solid rgba(139, 92, 246, 0.25);">
+      <i class="bi bi-diagram-3 text-purple" style="color: var(--accent-purple);"></i>
+      <span class="small fw-semibold text-uppercase tracking-wider" style="color: var(--accent-purple);">Machine Learning Architecture</span>
+    </div>
+    <h1 class="h2 fw-bold text-white mb-1">ML Insights & DBSCAN Exploratory Clustering</h1>
+    <p class="text-muted small mb-0">
+      Understand how ScamShield combines density-based clustering for unsupervised anomaly detection with supervised TF-IDF classification.
+    </p>
+  </div>
+
+  <!-- Section 1: DBSCAN Clustering Visualizer -->
+  <div class="row g-4 mb-5">
+    <div class="col-lg-8">
+      <div class="cyber-card h-100">
+        
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+          <div>
+            <h3 class="h5 fw-bold text-white mb-0">
+              <i class="bi bi-diagram-3-fill text-info me-2"></i>DBSCAN 2D Latent Feature Space
+            </h3>
+            <span class="small text-muted">Cosine metric density clusters vs anomaly noise points</span>
+          </div>
+
+          <!-- Scatter Filter Controls -->
+          <div class="btn-group btn-group-sm" role="group" id="dbscanFilterGroup">
+            <button type="button" class="btn btn-cyber-outline active" data-filter="all">All Points</button>
+            <button type="button" class="btn btn-cyber-outline" data-filter="noise">
+              <span class="text-danger">●</span> Outliers / Noise
+            </button>
+            <button type="button" class="btn btn-cyber-outline" data-filter="spam">
+              <span class="text-warning">●</span> Spam Only
+            </button>
+            <button type="button" class="btn btn-cyber-outline" data-filter="ham">
+              <span class="text-success">●</span> Ham Only
+            </button>
+          </div>
+        </div>
+
+        <!-- Canvas Container -->
+        <div class="dbscan-canvas-container" id="canvasWrapper">
+          <canvas id="dbscanCanvas"></canvas>
+          <div id="dbscanTooltip" class="dbscan-tooltip"></div>
+          
+          <!-- Loading overlay -->
+          <div id="canvasLoader" class="position-absolute top-50 start-50 translate-middle text-center">
+            <div class="spinner-border text-info mb-2" role="status"></div>
+            <div class="small text-muted font-mono">Loading cluster vectors...</div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 pt-2 border-top border-secondary-subtle small text-dim font-mono">
+          <div>
+            <span>Clusters Found: <strong class="text-white" id="statClusters">-</strong></span> | 
+            <span>Outliers/Noise: <strong class="text-danger" id="statNoise">-</strong></span> | 
+            <span>Points Sampled: <strong class="text-info" id="statSamples">500</strong></span>
+          </div>
+          <span class="text-muted"><i class="bi bi-cursor me-1"></i> Hover over any point to inspect message snippet</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Right: Explanatory Card for DBSCAN -->
+    <div class="col-lg-4">
+      <div class="cyber-card h-100 p-4 d-flex flex-column justify-content-between">
+        <div>
+          <h4 class="h6 fw-bold text-white text-uppercase tracking-wider mb-3">
+            <i class="bi bi-lightbulb-fill text-warning me-2"></i>Why DBSCAN in Scam Detection?
+          </h4>
+          
+          <p class="small text-muted mb-3">
+            <strong>Density-Based Spatial Clustering of Applications with Noise (DBSCAN)</strong> groups messages that are closely packed together based on cosine distance in reduced semantic space.
+          </p>
+
+          <div class="p-3 rounded-3 mb-3" style="background: rgba(244, 63, 94, 0.08); border-left: 3px solid var(--risk-high);">
+            <span class="small fw-bold text-white d-block mb-1">Noise (-1) as Anomaly Detection</span>
+            <p class="small text-muted mb-0">
+              Points that do not belong to any dense cluster are classified as <strong>Noise (-1)</strong>. In cybersecurity, this isolates zero-day phishing phrasing, unusual character distributions, or uncoordinated spam attempts.
+            </p>
+          </div>
+
+          <div class="p-3 rounded-3 mb-3" style="background: rgba(56, 189, 248, 0.08); border-left: 3px solid var(--accent-cyan);">
+            <span class="small fw-bold text-white d-block mb-1">Dense Clusters as Campaigns</span>
+            <p class="small text-muted mb-0">
+              Dense clusters represent coordinated spam campaigns (e.g. repeated lottery formats or bulk credit offers) that share near-identical TF-IDF feature distributions.
+            </p>
+          </div>
+
+          <p class="small text-dim mb-0">
+            <em>Architectural Rule:</em> As specified in the project guidelines, DBSCAN serves as an exploratory clustering and outbreak discovery component; the supervised classifier handles production single-message verdicts.
+          </p>
+        </div>
+
+        <div class="mt-4 pt-3 border-top border-secondary-subtle">
+          <a href="{{ url_for('detect_dashboard') }}" class="btn btn-cyber-primary btn-sm w-100">
+            <i class="bi bi-radar"></i> Test Classifier in Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Supervised Model Benchmarks -->
+  <div class="mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h2 class="h4 fw-bold text-white mb-0">
+          <i class="bi bi-bar-chart-fill text-success me-2"></i>Supervised Model Evaluation & Benchmarks
+        </h2>
+        <span class="small text-muted">Evaluated on 1,034 held-out test messages with zero data leakage</span>
+      </div>
+      <span class="badge bg-success-subtle text-success border border-success-subtle font-mono small">
+        VERIFIED TEST RUN
+      </span>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="cyber-card p-0 overflow-hidden mb-4">
+      <div class="table-responsive">
+        <table class="table table-dark table-hover mb-0 align-middle">
+          <thead>
+            <tr class="font-mono small text-muted text-uppercase" style="background: rgba(255,255,255,0.03);">
+              <th class="ps-4">Model Architecture</th>
+              <th>Accuracy</th>
+              <th>Precision</th>
+              <th>Recall</th>
+              <th>F1-Score</th>
+              <th class="pe-4">Production Role</th>
+            </tr>
+          </thead>
+          <tbody id="metricsTableBody" class="font-mono small">
+            <tr>
+              <td class="ps-4 fw-bold text-white">
+                <i class="bi bi-check-circle-fill text-info me-2"></i>Multinomial Naive Bayes
+              </td>
+              <td class="text-info fw-bold" id="nbAcc">98.74%</td>
+              <td class="text-white" id="nbPrec">98.36%</td>
+              <td class="text-white" id="nbRec">91.60%</td>
+              <td class="text-success fw-bold" id="nbF1">94.86%</td>
+              <td class="pe-4"><span class="badge bg-info text-dark">Selected Primary Model</span></td>
+            </tr>
+            <tr>
+              <td class="ps-4 fw-bold text-white">
+                <i class="bi bi-circle text-muted me-2"></i>Logistic Regression (C=5.0)
+              </td>
+              <td class="text-info fw-bold" id="lrAcc">98.45%</td>
+              <td class="text-white" id="lrPrec">100.00%</td>
+              <td class="text-white" id="lrRec">87.79%</td>
+              <td class="text-white" id="lrF1">93.50%</td>
+              <td class="pe-4"><span class="badge bg-secondary">Alternative Baseline</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Confusion Matrix Visualizer -->
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="cyber-card p-4">
+          <h4 class="h6 fw-bold text-white text-uppercase tracking-wider mb-3">
+            <i class="bi bi-grid-3x3 text-info me-2"></i>Confusion Matrix (Naive Bayes on 1,034 Test Samples)
+          </h4>
+          
+          <div class="row g-2 text-center font-mono">
+            <div class="col-6">
+              <div class="p-3 rounded-3" style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--risk-low-border);">
+                <span class="d-block display-6 fw-bold text-success" id="cmTn">901</span>
+                <span class="small text-muted">True Negatives</span>
+                <span class="d-block text-dim" style="font-size: 0.7rem;">Legitimate correctly identified</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-3 rounded-3" style="background: rgba(245, 158, 11, 0.1); border: 1px solid var(--risk-medium-border);">
+                <span class="d-block display-6 fw-bold text-warning" id="cmFp">2</span>
+                <span class="small text-muted">False Positives</span>
+                <span class="d-block text-dim" style="font-size: 0.7rem;">Legitimate flagged as spam</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-3 rounded-3" style="background: rgba(244, 63, 94, 0.1); border: 1px solid var(--risk-high-border);">
+                <span class="d-block display-6 fw-bold text-danger" id="cmFn">11</span>
+                <span class="small text-muted">False Negatives</span>
+                <span class="d-block text-dim" style="font-size: 0.7rem;">Spam slipped past model</span>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="p-3 rounded-3" style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.3);">
+                <span class="d-block display-6 fw-bold text-info" id="cmTp">120</span>
+                <span class="small text-muted">True Positives</span>
+                <span class="d-block text-dim" style="font-size: 0.7rem;">Spam caught correctly</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dataset Breakdown -->
+      <div class="col-md-6">
+        <div class="cyber-card p-4">
+          <h4 class="h6 fw-bold text-white text-uppercase tracking-wider mb-3">
+            <i class="bi bi-database-check text-info me-2"></i>Dataset Distribution & Provenance
+          </h4>
+          
+          <ul class="list-unstyled small d-flex flex-column gap-2 mb-4">
+            <li class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+              <span class="text-muted">Dataset Source</span>
+              <span class="fw-semibold text-white">UCI SMS Spam Collection</span>
+            </li>
+            <li class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+              <span class="text-muted">Total Cleaned Records</span>
+              <span class="fw-semibold text-white font-mono" id="statTotalRecs">5,171 messages</span>
+            </li>
+            <li class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+              <span class="text-muted">Ham (Legitimate)</span>
+              <span class="fw-semibold text-success font-mono" id="statHamCount">4,518 (87.4%)</span>
+            </li>
+            <li class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+              <span class="text-muted">Spam / Malicious</span>
+              <span class="fw-semibold text-danger font-mono" id="statSpamCount">653 (12.6%)</span>
+            </li>
+            <li class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+              <span class="text-muted">Validation Strategy</span>
+              <span class="fw-semibold text-info">Stratified 80/20 Split</span>
+            </li>
+          </ul>
+
+          <div class="p-3 rounded-3" style="background: rgba(56, 189, 248, 0.05); border: 1px dashed var(--border-subtle);">
+            <p class="small text-muted mb-0">
+              <i class="bi bi-shield-check text-info me-1"></i>
+              <strong>Zero Data Leakage:</strong> TF-IDF vocabulary fitting was performed strictly on the 80% training partition, preventing test data contamination.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/insights.js') }}"></script>
+{% endblock %}

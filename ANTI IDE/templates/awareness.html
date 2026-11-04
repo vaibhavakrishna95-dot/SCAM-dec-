@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+
+{% block title %}Scam Awareness & Safety Guide — SCAMSHIELD{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  
+  <!-- Header -->
+  <div class="text-center max-w-700 mx-auto mb-5" style="max-width: 750px;">
+    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25);">
+      <i class="bi bi-shield-check text-success"></i>
+      <span class="small fw-semibold text-success text-uppercase tracking-wider">Cybersecurity Education</span>
+    </div>
+    <h1 class="display-5 fw-bold text-white mb-3">Scam Awareness & Safety Guide</h1>
+    <p class="text-muted lead mb-0">
+      Social engineering tactics evolve constantly. Learn to spot the underlying deception mechanics behind phishing, fake job offers, OTP theft, and payment fraud.
+    </p>
+  </div>
+
+  <!-- Threat Vectors Grid -->
+  <div class="row g-4 mb-5">
+    
+    <!-- 1. Phishing & Impersonation -->
+    <div class="col-lg-4 col-md-6">
+      <div class="cyber-card h-100 p-4">
+        <div class="d-inline-flex p-3 rounded-3 mb-3" style="background: rgba(244, 63, 94, 0.1); color: var(--risk-high);">
+          <i class="bi bi-envelope-exclamation fs-3"></i>
+        </div>
+        <h3 class="h5 fw-bold text-white mb-2">Phishing & Brand Impersonation</h3>
+        <p class="small text-muted mb-3">
+          Attackers mimic recognizable brands (banks, postal couriers, streaming services) claiming your account is locked or a delivery is held.
+        </p>
+        <div class="p-2 rounded small font-mono mb-3" style="background: rgba(0,0,0,0.3); border-left: 2px solid var(--risk-high); color: #fca5a5;">
+          "Your Netflix subscription has expired. Update billing details immediately to avoid cancellation."
+        </div>
+        <span class="small text-info fw-semibold d-block mb-1">Defense Action:</span>
+        <p class="small text-dim mb-0">
+          Never tap embedded links. Navigate independently to the service's official website or app to check your account status.
+        </p>
+      </div>
+    </div>
+
+    <!-- 2. OTP & Credential Theft -->
+    <div class="col-lg-4 col-md-6">
+      <div class="cyber-card h-100 p-4">
+        <div class="d-inline-flex p-3 rounded-3 mb-3" style="background: rgba(245, 158, 11, 0.1); color: var(--risk-medium);">
+          <i class="bi bi-key-fill fs-3"></i>
+        </div>
+        <h3 class="h5 fw-bold text-white mb-2">OTP & 2FA Theft</h3>
+        <p class="small text-muted mb-3">
+          Scammers pose as bank executives, telecom agents, or tech support, claiming an urgent security glitch or SIM upgrade requires your OTP.
+        </p>
+        <div class="p-2 rounded small font-mono mb-3" style="background: rgba(0,0,0,0.3); border-left: 2px solid var(--risk-medium); color: #fde68a;">
+          "SBI Alert: Unusual login from Russia detected. Share the 6-digit OTP sent to your phone to cancel the transfer."
+        </div>
+        <span class="small text-info fw-semibold d-block mb-1">Defense Action:</span>
+        <p class="small text-dim mb-0">
+          Banks and security desks will NEVER request your OTP or PIN over phone, SMS, or email. Treat all OTP requests as hostile.
+        </p>
+      </div>
+    </div>
+
+    <!-- 3. Fake Job & Task Scams -->
+    <div class="col-lg-4 col-md-6">
+      <div class="cyber-card h-100 p-4">
+        <div class="d-inline-flex p-3 rounded-3 mb-3" style="background: rgba(56, 189, 248, 0.1); color: var(--accent-cyan);">
+          <i class="bi bi-briefcase-fill fs-3"></i>
+        </div>
+        <h3 class="h5 fw-bold text-white mb-2">Fake Jobs & "Task" Fraud</h3>
+        <p class="small text-muted mb-3">
+          Unsolicited offers on WhatsApp or Telegram promising high daily returns for simple tasks (liking YouTube videos, reviewing hotels).
+        </p>
+        <div class="p-2 rounded small font-mono mb-3" style="background: rgba(0,0,0,0.3); border-left: 2px solid var(--accent-cyan); color: #bae6fd;">
+          "Earn $300-$800/day part-time from home. Just like 5 videos daily. Contact manager on Telegram @EarnQuick."
+        </div>
+        <span class="small text-info fw-semibold d-block mb-1">Defense Action:</span>
+        <p class="small text-dim mb-0">
+          Legitimate employers do not conduct hiring exclusively over anonymous messaging apps or ask you to pay "advance task deposits".
+        </p>
+      </div>
+    </div>
+
+    <!-- 4. Lottery & Advance-Fee Fraud -->
+    <div class="col-lg-4 col-md-6">
+      <div class="cyber-card h-100 p-4">
+        <div class="d-inline-flex p-3 rounded-3 mb-3" style="background: rgba(139, 92, 246, 0.1); color: var(--accent-purple);">
+          <i class="bi bi-trophy-fill fs-3"></i>
+        </div>
+        <h3 class="h5 fw-bold text-white mb-2">Lottery & Fake Prize Fraud</h3>
+        <p class="small text-muted mb-3">
+          Claims that your mobile number or email was randomly selected to win cash, a luxury vehicle, or shopping vouchers.
+        </p>
+        <div class="p-2 rounded small font-mono mb-3" style="background: rgba(0,0,0,0.3); border-left: 2px solid var(--accent-purple); color: #ddd6fe;">
+          "CONGRATULATIONS! Your mobile number won £750,000 in the UK National Lottery. Call +44... to claim."
+        </div>
+        <span class="small text-info fw-semibold d-block mb-1">Defense Action:</span>
+        <p class="small text-dim mb-0">
+          You cannot win a lottery you never bought a ticket for. Any prize requiring a "processing fee" or "customs tax" is a scam.
+        </p>
+      </div>
+    </div>
+
+    <!-- 5. QR Code & Fraudulent Payment Requests -->
+    <div class="col-lg-4 col-md-6">
+      <div class="cyber-card h-100 p-4">
+        <div class="d-inline-flex p-3 rounded-3 mb-3" style="background: rgba(16, 185, 129, 0.1); color: #34d399;">
+          <i class="bi bi-qr-code-scan fs-3"></i>
+        </div>
+        <h3 class="h5 fw-bold text-white mb-2">QR Code & Payment Trap</h3>
+        <p class="small text-muted mb-3">
+          Buyers on marketplace apps claiming they want to purchase your item, sending a QR code telling you to "scan to receive payment".
+        </p>
+        <div class="p-2 rounded small font-mono mb-3" style="background: rgba(0,0,0,0.3); border-left: 2px solid #10b981; color: #a7f3d0;">
+          "I have initiated payment for your couch. Scan this QR code and enter your UPI PIN to accept money."
+        </div>
+        <span class="small text-info fw-semibold d-block mb-1">Defense Action:</span>
+        <p class="small text-dim mb-0">
+          <strong>Golden Rule:</strong> Entering your PIN or scanning a merchant QR code ALWAYS deducts money from your account, never receives it.
+        </p>
+      </div>
+    </div>
+
+    <!-- 6. Suspicious & Shortened URLs -->
+    <div class="col-lg-4 col-md-6">
+      <div class="cyber-card h-100 p-4">
+        <div class="d-inline-flex p-3 rounded-3 mb-3" style="background: rgba(56, 189, 248, 0.1); color: var(--accent-cyan);">
+          <i class="bi bi-link-45deg fs-3"></i>
+        </div>
+        <h3 class="h5 fw-bold text-white mb-2">Shortened & Spoofed Links</h3>
+        <p class="small text-muted mb-3">
+          Links using URL shorteners (bit.ly, tinyurl) or lookalike domains (e.g. <code>paypa1-security.xyz</code>) to conceal malicious payloads.
+        </p>
+        <div class="p-2 rounded small font-mono mb-3" style="background: rgba(0,0,0,0.3); border-left: 2px solid var(--accent-cyan); color: #bae6fd;">
+          "Your FedEx parcel is delayed due to incorrect address. Confirm now at http://bit.ly/3xX-parcel-fedx"
+        </div>
+        <span class="small text-info fw-semibold d-block mb-1">Defense Action:</span>
+        <p class="small text-dim mb-0">
+          Use ScamShield's text-based URL inspector to check suspicious link patterns without ever visiting the destination.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Interactive Spot-The-Scam Quiz Section -->
+  <div class="cyber-card p-4 p-lg-5 mb-5">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="h3 fw-bold text-white mb-1">
+          <i class="bi bi-question-diamond text-info me-2"></i>Interactive Check: "Spot the Red Flag"
+        </h2>
+        <span class="text-muted small">Test your threat perception against 3 real-world scenarios.</span>
+      </div>
+      <span class="badge bg-dark border border-secondary text-info font-mono">SELF ASSESSMENT</span>
+    </div>
+
+    <!-- Scenario 1 -->
+    <div class="p-4 rounded-3 mb-4" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-card);">
+      <span class="badge bg-secondary-subtle text-white font-mono small mb-2">Scenario 1 of 3</span>
+      <h4 class="h5 text-white mb-2">The Unscheduled Delivery SMS</h4>
+      <p class="small font-mono text-muted mb-3 p-3 rounded" style="background: rgba(255,255,255,0.03);">
+        "USPS Notice: Your package could not be delivered due to missing apartment number. Update within 12 hours at http://usps-track-parcel.xyz/update or package will be returned to sender."
+      </p>
+      
+      <p class="small text-muted mb-2 fw-semibold">What is the primary indicator of fraud here?</p>
+      <div class="d-flex flex-column gap-2" id="quiz1Options">
+        <button type="button" class="btn btn-cyber-outline text-start small quiz-opt" data-q="1" data-correct="false">
+          A) It mentions a 12-hour window.
+        </button>
+        <button type="button" class="btn btn-cyber-outline text-start small quiz-opt" data-q="1" data-correct="true">
+          B) The domain is <code>usps-track-parcel.xyz</code> rather than the official <code>usps.com</code> domain.
+        </button>
+        <button type="button" class="btn btn-cyber-outline text-start small quiz-opt" data-q="1" data-correct="false">
+          C) Packages never have missing apartment numbers.
+        </button>
+      </div>
+      <div id="quiz1Feedback" class="small mt-3 d-none"></div>
+    </div>
+
+    <!-- Scenario 2 -->
+    <div class="p-4 rounded-3" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-card);">
+      <span class="badge bg-secondary-subtle text-white font-mono small mb-2">Scenario 2 of 3</span>
+      <h4 class="h5 text-white mb-2">The Urgent Security Desk Call / Message</h4>
+      <p class="small font-mono text-muted mb-3 p-3 rounded" style="background: rgba(255,255,255,0.03);">
+        "Fraud alert: A debit transaction of $1,490 was attempted on your Visa card. If you did not authorize this, immediately reply with the 6-digit confirmation code sent to your phone to reverse the charge."
+      </p>
+      
+      <p class="small text-muted mb-2 fw-semibold">What is the correct immediate action?</p>
+      <div class="d-flex flex-column gap-2" id="quiz2Options">
+        <button type="button" class="btn btn-cyber-outline text-start small quiz-opt" data-q="2" data-correct="false">
+          A) Reply with the code immediately so the charge does not go through.
+        </button>
+        <button type="button" class="btn btn-cyber-outline text-start small quiz-opt" data-q="2" data-correct="true">
+          B) Never share the code. Open your bank's official app or call the number printed on the back of your physical card.
+        </button>
+        <button type="button" class="btn btn-cyber-outline text-start small quiz-opt" data-q="2" data-correct="false">
+          C) Forward the code to your email for safekeeping.
+        </button>
+      </div>
+      <div id="quiz2Feedback" class="small mt-3 d-none"></div>
+    </div>
+
+  </div>
+
+  <!-- Incident Response Checklist -->
+  <div class="cyber-card p-4 p-lg-5">
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <i class="bi bi-shield-shaded text-danger fs-3"></i>
+      <h3 class="h4 fw-bold text-white mb-0">Emergency Incident Response Checklist</h3>
+    </div>
+    <p class="text-muted small mb-4">
+      If you accidentally clicked a suspicious link, shared credentials, or authorized an unfamiliar transfer, follow this immediate triage procedure:
+    </p>
+
+    <div class="row g-3">
+      <div class="col-md-3 col-sm-6">
+        <div class="p-3 rounded-3 h-100" style="background: rgba(244, 63, 94, 0.08); border: 1px solid var(--risk-high-border);">
+          <span class="d-block font-mono text-danger fw-bold small mb-1">STEP 1</span>
+          <span class="fw-bold text-white small d-block mb-1">Freeze Cards & Accounts</span>
+          <p class="small text-muted mb-0">Immediately use your banking app to freeze affected credit/debit cards and lock netbanking.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="p-3 rounded-3 h-100" style="background: rgba(245, 158, 11, 0.08); border: 1px solid var(--risk-medium-border);">
+          <span class="d-block font-mono text-warning fw-bold small mb-1">STEP 2</span>
+          <span class="fw-bold text-white small d-block mb-1">Change Passwords</span>
+          <p class="small text-muted mb-0">Change passwords from a secure separate device. Invalidate active login sessions.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="p-3 rounded-3 h-100" style="background: rgba(56, 189, 248, 0.08); border: 1px solid var(--border-subtle);">
+          <span class="d-block font-mono text-info fw-bold small mb-1">STEP 3</span>
+          <span class="fw-bold text-white small d-block mb-1">Revoke 2FA Devices</span>
+          <p class="small text-muted mb-0">Check for unauthorized secondary devices added to your Google, Apple, or email accounts.</p>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <div class="p-3 rounded-3 h-100" style="background: rgba(16, 185, 129, 0.08); border: 1px solid var(--risk-low-border);">
+          <span class="d-block font-mono text-success fw-bold small mb-1">STEP 4</span>
+          <span class="fw-bold text-white small d-block mb-1">Report to Cyber Authorities</span>
+          <p class="small text-muted mb-0">File an incident report on your national cybercrime reporting portal with screenshots.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  // Simple interactive quiz handlers
+  document.querySelectorAll('.quiz-opt').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const qNum = this.getAttribute('data-q');
+      const isCorrect = this.getAttribute('data-correct') === 'true';
+      const feedbackDiv = document.getElementById(`quiz${qNum}Feedback`);
+      
+      // Reset siblings
+      document.querySelectorAll(`#quiz${qNum}Options .quiz-opt`).forEach(b => {
+        b.classList.remove('border-success', 'text-success', 'border-danger', 'text-danger');
+      });
+
+      feedbackDiv.classList.remove('d-none');
+      if (isCorrect) {
+        this.classList.add('border-success', 'text-success');
+        feedbackDiv.innerHTML = '<div class="p-2 rounded bg-success-subtle text-success border border-success-subtle"><i class="bi bi-check-circle-fill me-1"></i> <strong>Correct!</strong> Attackers register lookalike domains (.xyz, hyphenated names) to mimic authentic organizations. Always check the primary domain.</div>';
+      } else {
+        this.classList.add('border-danger', 'text-danger');
+        feedbackDiv.innerHTML = '<div class="p-2 rounded bg-danger-subtle text-danger border border-danger-subtle"><i class="bi bi-x-circle-fill me-1"></i> <strong>Incorrect.</strong> Look at option B: Legitimate institutions never ask you to disclose confirmation codes or click deceptive lookalike domains.</div>';
+      }
+    });
+  });
+</script>
+{% endblock %}

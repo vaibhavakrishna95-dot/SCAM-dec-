@@ -1,0 +1,279 @@
+{% extends "base.html" %}
+
+{% block title %}Scam Detection Dashboard — SCAMSHIELD{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  
+  <!-- Dashboard Header -->
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <div>
+      <h1 class="h2 fw-bold text-white mb-1">
+        <i class="bi bi-radar text-info me-2"></i>Scam Detection Dashboard
+      </h1>
+      <p class="text-muted small mb-0">
+        Paste suspicious SMS, emails, or links to perform machine-learning classification and heuristic threat analysis.
+      </p>
+    </div>
+    
+    <div class="d-flex align-items-center gap-2">
+      <span class="badge bg-dark border border-secondary text-dim font-mono small py-2 px-3">
+        <i class="bi bi-shield-check text-success me-1"></i> Model: MultinomialNB (98.7% Acc)
+      </span>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    
+    <!-- Left Column: Input Form & Quick Samples -->
+    <div class="col-lg-7">
+      <div class="cyber-card mb-4">
+        
+        <!-- Category Selector -->
+        <div class="mb-3">
+          <label class="form-label text-muted small fw-semibold text-uppercase tracking-wider">
+            1. Select Message Category
+          </label>
+          <div class="d-flex flex-wrap gap-2" id="categoryGroup">
+            <button type="button" class="category-pill active" data-category="sms">
+              <i class="bi bi-chat-left-text"></i> SMS / Text
+            </button>
+            <button type="button" class="category-pill" data-category="email">
+              <i class="bi bi-envelope"></i> Email Message
+            </button>
+            <button type="button" class="category-pill" data-category="url">
+              <i class="bi bi-link-45deg"></i> Website URL
+            </button>
+            <button type="button" class="category-pill" data-category="other">
+              <i class="bi bi-textarea-t"></i> Other Text
+            </button>
+          </div>
+        </div>
+
+        <!-- Sample Message Buttons -->
+        <div class="mb-3">
+          <label class="form-label text-muted small fw-semibold text-uppercase tracking-wider d-flex justify-content-between">
+            <span>2. Or Load Representative Example</span>
+            <span class="text-dim">1-Click Test</span>
+          </label>
+          <div class="d-flex flex-wrap gap-2" id="sampleButtons">
+            <button type="button" class="sample-btn" data-sample="prize">
+              <i class="bi bi-trophy text-warning me-1"></i> Lottery Prize Scam
+            </button>
+            <button type="button" class="sample-btn" data-sample="otp">
+              <i class="bi bi-key text-danger me-1"></i> Urgent Bank OTP
+            </button>
+            <button type="button" class="sample-btn" data-sample="url">
+              <i class="bi bi-box-seam text-warning me-1"></i> Fake Courier Link
+            </button>
+            <button type="button" class="sample-btn" data-sample="job">
+              <i class="bi bi-briefcase text-info me-1"></i> Fake Job Offer
+            </button>
+            <button type="button" class="sample-btn" data-sample="ham1">
+              <i class="bi bi-check-circle text-success me-1"></i> Normal Delivery Alert
+            </button>
+            <button type="button" class="sample-btn" data-sample="ham2">
+              <i class="bi bi-chat text-success me-1"></i> Normal Personal Chat
+            </button>
+          </div>
+        </div>
+
+        <!-- Input Textarea -->
+        <div class="mb-3">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <label for="messageInput" class="form-label text-muted small fw-semibold text-uppercase tracking-wider mb-0">
+              3. Message Text / URL
+            </label>
+            <div class="small text-dim font-mono">
+              <span id="charCount">0</span> chars | <span id="wordCount">0</span> words
+            </div>
+          </div>
+          <textarea 
+            id="messageInput" 
+            class="cyber-textarea" 
+            rows="6" 
+            placeholder="Paste suspicious SMS, email body, prize message, OTP request, or URL link here..."
+          ></textarea>
+          <div id="inputErrorFeedback" class="text-danger small mt-2 d-none">
+            <i class="bi bi-exclamation-triangle-fill me-1"></i> <span id="errorMsgText"></span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-between align-items-center">
+          <button type="button" id="clearBtn" class="btn btn-cyber-outline">
+            <i class="bi bi-trash3 me-1"></i> Clear
+          </button>
+          
+          <button type="button" id="analyzeBtn" class="btn btn-cyber-primary px-4 py-2">
+            <i class="bi bi-shield-check me-1"></i> Analyze Message
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Session Scan History -->
+      <div class="cyber-card">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3 class="h6 fw-bold text-white text-uppercase tracking-wider mb-0">
+            <i class="bi bi-clock-history text-info me-2"></i>Recent Scans (Current Session)
+          </h3>
+          <button type="button" id="clearHistoryBtn" class="btn btn-link text-dim text-decoration-none btn-sm p-0">
+            <i class="bi bi-x-circle me-1"></i> Clear History
+          </button>
+        </div>
+        
+        <div id="historyList">
+          <div class="text-center py-4 text-dim small" id="emptyHistoryMsg">
+            <i class="bi bi-inbox fs-3 d-block mb-1 opacity-50"></i>
+            No previous scans in this session yet. Your analyzed messages will appear here.
+          </div>
+        </div>
+
+        <div class="mt-3 pt-3 border-top border-secondary-subtle small text-dim d-flex align-items-center gap-2">
+          <i class="bi bi-lock-fill text-success"></i>
+          <span>Privacy Guaranteed: No message text is stored permanently on server disks.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Results & Threat Breakdown -->
+    <div class="col-lg-5">
+      
+      <!-- Initial Placeholder State (Before Analysis) -->
+      <div id="resultsPlaceholder" class="cyber-card text-center py-5">
+        <div class="p-4 rounded-circle d-inline-flex mb-3" style="background: rgba(56, 189, 248, 0.08); border: 1px dashed rgba(56, 189, 248, 0.3);">
+          <i class="bi bi-shield-shaded display-4 text-cyan" style="color: var(--accent-cyan);"></i>
+        </div>
+        <h4 class="h5 fw-bold text-white mb-2">Awaiting Analysis</h4>
+        <p class="text-muted small px-4 mb-4">
+          Paste a message on the left or click any representative example, then press <strong>Analyze Message</strong> to generate an immediate risk report.
+        </p>
+        <div class="text-start p-3 mx-3 rounded-3" style="background: rgba(0,0,0,0.25); border: 1px solid var(--border-card);">
+          <span class="d-block small text-info fw-semibold mb-2">What ScamShield Inspects:</span>
+          <ul class="list-unstyled small text-muted mb-0 d-flex flex-column gap-1">
+            <li><i class="bi bi-check2 text-info me-2"></i> ML vocabulary & syntactic distribution</li>
+            <li><i class="bi bi-check2 text-info me-2"></i> Urgent coercion & artificial deadlines</li>
+            <li><i class="bi bi-check2 text-info me-2"></i> Requests for OTPs, PINs, or credentials</li>
+            <li><i class="bi bi-check2 text-info me-2"></i> Fake courier links & IP-based URLs</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Loading Radar State -->
+      <div id="resultsLoading" class="cyber-card text-center py-5 d-none">
+        <div class="radar-scan-box">
+          <div class="radar-sweep"></div>
+          <i class="bi bi-shield-lock radar-center-icon"></i>
+        </div>
+        <h4 class="h5 fw-bold text-white mb-2">Scanning Threat Signatures...</h4>
+        <p class="text-muted small px-4 mb-0">
+          Running TF-IDF feature extraction, querying classification model, and testing heuristic threat vectors.
+        </p>
+      </div>
+
+      <!-- Active Results Panel -->
+      <div id="resultsCard" class="cyber-card d-none">
+        
+        <!-- Header Verdict & Risk Badge -->
+        <div class="d-flex justify-content-between align-items-start mb-3">
+          <div>
+            <span class="small text-dim text-uppercase font-mono fw-semibold d-block mb-1">Detection Verdict</span>
+            <h3 class="h4 fw-bold text-white mb-0" id="resVerdict">Spam / Suspicious</h3>
+          </div>
+          <div id="resRiskBadge" class="risk-badge risk-badge-high">
+            <i class="bi bi-exclamation-octagon-fill"></i>
+            <span id="resRiskLevel">High Risk</span>
+          </div>
+        </div>
+
+        <!-- Risk Score & Visual Meter -->
+        <div class="risk-meter-container mb-4 p-3 rounded-3" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-card);">
+          <div class="d-flex justify-content-between align-items-center small mb-1">
+            <span class="text-muted fw-semibold">Integrated Threat Score</span>
+            <span class="font-mono fw-bold text-white fs-6" id="resRiskScore">82.5 / 100</span>
+          </div>
+          <div class="risk-meter-bar">
+            <div id="resRiskMeterFill" class="risk-meter-fill high" style="width: 82.5%;"></div>
+          </div>
+          <div class="d-flex justify-content-between text-dim small pt-1 font-mono" style="font-size: 0.72rem;">
+            <span>0 (Safe)</span>
+            <span>50 (Moderate)</span>
+            <span>100 (Severe)</span>
+          </div>
+        </div>
+
+        <!-- ML Model Confidence Metric -->
+        <div class="mb-4 p-3 rounded-3" style="background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2);">
+          <div class="d-flex justify-content-between align-items-center mb-1">
+            <span class="small fw-semibold text-info">
+              <i class="bi bi-cpu me-1"></i> Machine Learning Probability
+            </span>
+            <span class="font-mono fw-bold text-white" id="resModelProb">98.4%</span>
+          </div>
+          <p class="small text-muted mb-0" id="resModelInterpretation">
+            High statistical confidence of spam pattern matching.
+          </p>
+        </div>
+
+        <!-- Discovered Red Flags List -->
+        <div class="mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h4 class="h6 fw-bold text-white text-uppercase tracking-wider mb-0">
+              <i class="bi bi-flag-fill text-danger me-1"></i> Discovered Warning Signs
+            </h4>
+            <span class="badge bg-secondary-subtle text-white font-mono" id="resFlagsCount">2 Flags</span>
+          </div>
+
+          <div id="resFlagsList" class="d-flex flex-column gap-2">
+            <!-- Dynamic Flags Injected Here -->
+          </div>
+        </div>
+
+        <!-- Safe URL Inspection Section (Conditional) -->
+        <div id="resUrlSection" class="mb-4 d-none">
+          <h4 class="h6 fw-bold text-white text-uppercase tracking-wider mb-2">
+            <i class="bi bi-link-45deg text-warning me-1"></i> Safe URL Heuristic Dissection
+          </h4>
+          <div class="p-3 rounded-3" style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.25);">
+            <div id="resUrlList" class="d-flex flex-column gap-2">
+              <!-- URLs Injected Here -->
+            </div>
+            <span class="small text-dim mt-2 d-block">
+              <i class="bi bi-info-circle me-1"></i> Safe text inspection: No live HTTP connection was made.
+            </span>
+          </div>
+        </div>
+
+        <!-- Plain English Explanation -->
+        <div class="mb-4">
+          <h4 class="h6 fw-bold text-white text-uppercase tracking-wider mb-2">
+            <i class="bi bi-chat-left-dots text-info me-1"></i> Plain-English Explanation
+          </h4>
+          <p class="small text-muted p-3 rounded-3 mb-0" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-card);" id="resExplanation">
+            Explanation details will be displayed here.
+          </p>
+        </div>
+
+        <!-- Actionable Safety Recommendations -->
+        <div class="mb-2">
+          <h4 class="h6 fw-bold text-white text-uppercase tracking-wider mb-2">
+            <i class="bi bi-shield-check text-success me-1"></i> Recommended Safety Actions
+          </h4>
+          <ul class="list-unstyled small text-muted d-flex flex-column gap-2 mb-0" id="resRecommendations">
+            <!-- Recommendations Injected Here -->
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

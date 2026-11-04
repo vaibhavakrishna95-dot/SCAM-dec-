@@ -1,0 +1,246 @@
+{% extends "base.html" %}
+
+{% block title %}SCAMSHIELD — Scam Detection Engine | Detect Suspicious Messages{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 position-relative overflow-hidden">
+  <div class="container py-lg-4">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-7">
+        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-4" style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25);">
+          <i class="bi bi-shield-shaded text-info"></i>
+          <span class="small fw-semibold text-info text-uppercase tracking-wider">AI Threat Intelligence Engine</span>
+        </div>
+
+        <h1 class="display-4 fw-extrabold mb-3 text-white">
+          SCAM<span class="brand-text-accent">SHIELD</span> — Scam Detection Engine
+        </h1>
+        
+        <p class="fs-4 fw-medium text-info mb-4" style="letter-spacing: -0.01em;">
+          “Detect Suspicious Messages. Stay One Step Ahead.”
+        </p>
+
+        <p class="lead text-muted mb-4 pe-lg-4">
+          Cybercriminals increasingly deploy deceptive SMS messages, fake lottery notifications, urgency-driven bank impersonations, and malicious phishing links. 
+          <strong>ScamShield</strong> combines a real NLP machine-learning classification model with deep heuristic threat inspection to reveal red flags before you click or reply.
+        </p>
+
+        <div class="d-flex flex-wrap gap-3 mb-5">
+          <a href="{{ url_for('detect_dashboard') }}" class="btn btn-cyber-primary btn-lg px-4" id="hero-btn-analyze">
+            <i class="bi bi-radar"></i> Analyze Suspicious Message
+          </a>
+          <a href="{{ url_for('ml_insights') }}" class="btn btn-cyber-secondary btn-lg px-4" id="hero-btn-insights">
+            <i class="bi bi-diagram-3"></i> Explore ML & DBSCAN
+          </a>
+        </div>
+
+        <!-- Key Metrics Strip -->
+        <div class="row g-3 pt-2 border-top" style="border-color: var(--border-card) !important;">
+          <div class="col-sm-4 col-6">
+            <div class="d-flex flex-column">
+              <span class="fs-3 fw-bold text-white font-mono">98.7%</span>
+              <span class="small text-muted">Model Test Accuracy</span>
+            </div>
+          </div>
+          <div class="col-sm-4 col-6">
+            <div class="d-flex flex-column">
+              <span class="fs-3 fw-bold text-info font-mono">5,500+</span>
+              <span class="small text-muted">Labeled Benchmarks</span>
+            </div>
+          </div>
+          <div class="col-sm-4 col-12">
+            <div class="d-flex flex-column">
+              <span class="fs-3 fw-bold text-success font-mono">0 ms</span>
+              <span class="small text-muted">Zero Third-Party Leaks</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual / Live Mini Inspector -->
+      <div class="col-lg-5">
+        <div class="cyber-card p-4 position-relative">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+              <span class="status-dot"></span>
+              <span class="small fw-semibold text-white">Live Threat Scanner</span>
+            </div>
+            <span class="badge bg-secondary-subtle text-info border border-info-subtle small font-mono">SAMPLE DEMO</span>
+          </div>
+
+          <!-- Interactive Mini Demo Card -->
+          <div class="p-3 rounded-3 mb-3" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-card);">
+            <div class="d-flex justify-content-between small text-dim mb-2">
+              <span>Category: <strong class="text-white">Urgent SMS</strong></span>
+              <span class="text-danger"><i class="bi bi-exclamation-triangle-fill"></i> Flagged</span>
+            </div>
+            <p class="small text-muted mb-0 font-mono" style="line-height: 1.5;">
+              "URGENT: Your account access is suspended. Verify your OTP and click <span class="text-warning">http://192.168.1.1/login</span> to restore services within 24 hours."
+            </p>
+          </div>
+
+          <!-- Threat Breakdown Preview -->
+          <div class="d-flex flex-column gap-2 mb-4">
+            <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background: rgba(244, 63, 94, 0.1); border-left: 3px solid var(--risk-high);">
+              <span class="small fw-medium text-white"><i class="bi bi-clock-history text-danger me-2"></i> Artificial Urgency</span>
+              <span class="severity-tag severity-high">HIGH</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background: rgba(244, 63, 94, 0.1); border-left: 3px solid var(--risk-high);">
+              <span class="small fw-medium text-white"><i class="bi bi-key text-danger me-2"></i> OTP & Credential Request</span>
+              <span class="severity-tag severity-high">HIGH</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background: rgba(245, 158, 11, 0.1); border-left: 3px solid var(--risk-medium);">
+              <span class="small fw-medium text-white"><i class="bi bi-link-45deg text-warning me-2"></i> Raw IP Address in URL</span>
+              <span class="severity-tag severity-medium">MEDIUM</span>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-3 text-center" style="background: rgba(56, 189, 248, 0.05); border: 1px dashed var(--border-subtle);">
+            <span class="d-block small text-muted mb-2">Have a message you received on your phone or email?</span>
+            <a href="{{ url_for('detect_dashboard') }}" class="btn btn-cyber-primary btn-sm w-100">
+              <i class="bi bi-shield-check"></i> Paste & Scan Your Message Now
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Core Pillars Section -->
+<section class="py-5" style="background: rgba(15, 23, 42, 0.4); border-top: 1px solid var(--border-card); border-bottom: 1px solid var(--border-card);">
+  <div class="container py-4">
+    <div class="text-center max-w-700 mx-auto mb-5" style="max-width: 700px;">
+      <h2 class="h1 fw-bold text-white mb-3">Multi-Layer Threat Inspection</h2>
+      <p class="text-muted">
+        Why single-method scanners fail: Scammers frequently disguise fraudulent requests behind polite wording, while machine-learning models alone can miss novel zero-day attacks. ScamShield uses a dual-engine architecture.
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-4">
+          <div class="d-inline-flex p-3 rounded-3 mb-4" style="background: rgba(56, 189, 248, 0.1); color: var(--accent-cyan);">
+            <i class="bi bi-cpu fs-3"></i>
+          </div>
+          <h3 class="h4 fw-bold text-white mb-2">NLP Machine Learning</h3>
+          <p class="text-muted small mb-3">
+            Trained on 5,500+ verified genuine and malicious messages using TF-IDF sublinear n-gram feature extraction. Analyzes subtle syntactic and vocabulary markers characteristic of spam campaigns.
+          </p>
+          <ul class="list-unstyled small text-dim d-flex flex-column gap-1 mb-0">
+            <li><i class="bi bi-check2 text-info me-2"></i> 98.74% verified accuracy</li>
+            <li><i class="bi bi-check2 text-info me-2"></i> True class probability scoring</li>
+            <li><i class="bi bi-check2 text-info me-2"></i> Trained on genuine UCI dataset</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-6">
+        <div class="cyber-card h-100 p-4">
+          <div class="d-inline-flex p-3 rounded-3 mb-4" style="background: rgba(245, 158, 11, 0.1); color: #fbbf24;">
+            <i class="bi bi-shield-exclamation fs-3"></i>
+          </div>
+          <h3 class="h4 fw-bold text-white mb-2">Heuristic Threat Engine</h3>
+          <p class="text-muted small mb-3">
+            Identifies psychological manipulation tactics used by attackers: artificial urgency, fear inducements, lottery prizes, fake jobs, and unsolicited OTP or password disclosure demands.
+          </p>
+          <ul class="list-unstyled small text-dim d-flex flex-column gap-1 mb-0">
+            <li><i class="bi bi-check2 text-warning me-2"></i> 7 granular threat categories</li>
+            <li><i class="bi bi-check2 text-warning me-2"></i> OTP & PIN theft protection</li>
+            <li><i class="bi bi-check2 text-warning me-2"></i> Authority impersonation flags</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-4 col-md-12">
+        <div class="cyber-card h-100 p-4">
+          <div class="d-inline-flex p-3 rounded-3 mb-4" style="background: rgba(16, 185, 129, 0.1); color: #34d399;">
+            <i class="bi bi-globe2 fs-3"></i>
+          </div>
+          <h3 class="h4 fw-bold text-white mb-2">Zero-Execution URL Inspector</h3>
+          <p class="text-muted small mb-3">
+            Performs safe, purely text-based URL dissection without triggering malicious downloads or visiting scam websites. Flags raw IP hostnames, high-abuse TLDs, and fake credential paths.
+          </p>
+          <ul class="list-unstyled small text-dim d-flex flex-column gap-1 mb-0">
+            <li><i class="bi bi-check2 text-success me-2"></i> Safe text-only heuristic check</li>
+            <li><i class="bi bi-check2 text-success me-2"></i> URL shortener detection</li>
+            <li><i class="bi bi-check2 text-success me-2"></i> Punycode homograph defense</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Demonstration -->
+<section class="py-5">
+  <div class="container py-4">
+    <div class="text-center mb-5" style="max-width: 650px; margin: 0 auto;">
+      <h2 class="h1 fw-bold text-white mb-3">How ScamShield Works</h2>
+      <p class="text-muted">A streamlined pipeline from raw input to verified cybersecurity risk evaluation.</p>
+    </div>
+
+    <div class="row g-4 position-relative">
+      <div class="col-md-4">
+        <div class="cyber-card p-4 text-center h-100">
+          <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3 font-mono fw-bold fs-4" style="width: 54px; height: 54px; background: rgba(56, 189, 248, 0.1); color: var(--accent-cyan); border: 1px solid rgba(56, 189, 248, 0.3);">
+            01
+          </div>
+          <h4 class="h5 fw-bold text-white mb-2">Input Ingestion</h4>
+          <p class="text-muted small mb-0">
+            Submit SMS text, an email excerpt, or a suspicious website address. The system standardizes casing, normalizes tokens, and sanitizes characters.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="cyber-card p-4 text-center h-100">
+          <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3 font-mono fw-bold fs-4" style="width: 54px; height: 54px; background: rgba(139, 92, 246, 0.1); color: var(--accent-purple); border: 1px solid rgba(139, 92, 246, 0.3);">
+            02
+          </div>
+          <h4 class="h5 fw-bold text-white mb-2">Dual Analysis</h4>
+          <p class="text-muted small mb-0">
+            The text is vectorized into TF-IDF space for ML probability prediction while the heuristic threat rules scan for urgency, OTP demands, and URL deceptions.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="cyber-card p-4 text-center h-100">
+          <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3 font-mono fw-bold fs-4" style="width: 54px; height: 54px; background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">
+            03
+          </div>
+          <h4 class="h5 fw-bold text-white mb-2">Risk Evaluation & Advisory</h4>
+          <p class="text-muted small mb-0">
+            A calibrated Risk Level (Low, Medium, High) is calculated along with clear red flags, plain-English explanations, and actionable safety steps.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action Banner -->
+<section class="py-5" style="background: linear-gradient(180deg, transparent 0%, rgba(56, 189, 248, 0.05) 100%);">
+  <div class="container py-4">
+    <div class="cyber-card p-5 text-center position-relative overflow-hidden" style="border-color: rgba(56, 189, 248, 0.3);">
+      <div class="position-relative z-1 max-w-700 mx-auto" style="max-width: 700px;">
+        <i class="bi bi-shield-check display-3 text-info mb-3 d-inline-block"></i>
+        <h2 class="display-6 fw-bold text-white mb-3">Ready to Analyze a Suspicious Message?</h2>
+        <p class="text-muted lead mb-4">
+          Test unknown sender numbers, fake parcel delivery alerts, prize claims, or job offers right now. Free, private, and instant.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+          <a href="{{ url_for('detect_dashboard') }}" class="btn btn-cyber-primary btn-lg px-4" id="cta-launch-dashboard">
+            <i class="bi bi-radar"></i> Open Scam Detection Dashboard
+          </a>
+          <a href="{{ url_for('awareness') }}" class="btn btn-cyber-outline btn-lg px-4" id="cta-read-guide">
+            <i class="bi bi-book"></i> Read Scam Awareness Guide
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

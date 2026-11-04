@@ -1,0 +1,37 @@
+{
+  "dataset": {
+    "total_records": 5169,
+    "ham_count": 4516,
+    "spam_count": 653,
+    "train_samples": 4135,
+    "test_samples": 1034,
+    "source": "UCI SMS Spam Collection (Almeida & Hidalgo)"
+  },
+  "selected_model": "Multinomial Naive Bayes",
+  "models": {
+    "Multinomial Naive Bayes": {
+      "accuracy": 0.9874,
+      "precision": 0.9836,
+      "recall": 0.916,
+      "f1": 0.9486,
+      "confusion_matrix": {
+        "tn": 901,
+        "fp": 2,
+        "fn": 11,
+        "tp": 120
+      }
+    },
+    "Logistic Regression": {
+      "accuracy": 0.9845,
+      "precision": 1.0,
+      "recall": 0.8779,
+      "f1": 0.935,
+      "confusion_matrix": {
+        "tn": 903,
+        "fp": 0,
+        "fn": 16,
+        "tp": 115
+      }
+    }
+  }
+}

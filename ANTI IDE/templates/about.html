@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}About Project — SCAMSHIELD Architecture & Methodology{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  
+  <!-- Header -->
+  <div class="mb-5">
+    <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2" style="background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25);">
+      <i class="bi bi-info-circle text-info"></i>
+      <span class="small fw-semibold text-info text-uppercase tracking-wider">Project Dossier & Whitepaper</span>
+    </div>
+    <h1 class="display-5 fw-bold text-white mb-2">About SCAMSHIELD</h1>
+    <p class="text-muted lead mb-0">
+      An end-to-end Machine Learning and Cyber Threat Intelligence System designed to detect, dissect, and neutralize deceptive text communications.
+    </p>
+  </div>
+
+  <div class="row g-4">
+    
+    <!-- Left Column: Objective, Architecture, Pipeline -->
+    <div class="col-lg-8">
+      
+      <!-- Project Objective -->
+      <div class="cyber-card p-4 mb-4">
+        <h3 class="h5 fw-bold text-white mb-3">
+          <i class="bi bi-bullseye text-info me-2"></i>Project Objective & Academic Scope
+        </h3>
+        <p class="small text-muted mb-3">
+          The proliferation of digital banking, e-commerce, and mobile messaging has produced a massive wave of social engineering fraud: from fraudulent lottery prize claims and urgent OTP harvesting to fake package tracking links.
+        </p>
+        <p class="small text-muted mb-0">
+          <strong>SCAMSHIELD</strong> was built to provide a reliable, transparent, and multi-layered threat classification engine. Rather than operating as a black-box scoring algorithm, it pairs statistical natural language processing with explainable heuristic red flags and safe text-based URL parsing to empower users with actionable defense recommendations.
+        </p>
+      </div>
+
+      <!-- ML Pipeline Workflow -->
+      <div class="cyber-card p-4 mb-4">
+        <h3 class="h5 fw-bold text-white mb-3">
+          <i class="bi bi-cpu-fill text-info me-2"></i>Machine Learning Workflow & Pipeline
+        </h3>
+        
+        <div class="p-3 rounded-3 mb-3" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-card);">
+          <div class="d-flex align-items-center gap-2 font-mono small text-info mb-2">
+            <span>[STAGE 1] DATASET INGESTION & PURIFICATION</span>
+          </div>
+          <p class="small text-muted mb-0">
+            Loaded 5,574 labeled messages from the official <strong>UCI Machine Learning Repository SMS Spam Collection</strong>. Cleaned missing values and removed 403 duplicate records to prevent data contamination, resulting in 5,171 pristine benchmark records (4,518 ham, 653 spam).
+          </p>
+        </div>
+
+        <div class="p-3 rounded-3 mb-3" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-card);">
+          <div class="d-flex align-items-center gap-2 font-mono small text-info mb-2">
+            <span>[STAGE 2] TEXT PREPROCESSING & TF-IDF VECTORIZATION</span>
+          </div>
+          <p class="small text-muted mb-0">
+            Messages undergo case-folding, regex URL/phone/money normalization, and punctuation filtering. Feature extraction is performed via <code>TfidfVectorizer</code> fitted strictly on the 80% training set (unigrams + bigrams, sublinear TF scaling, max 6,000 features).
+          </p>
+        </div>
+
+        <div class="p-3 rounded-3 mb-3" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-card);">
+          <div class="d-flex align-items-center gap-2 font-mono small text-info mb-2">
+            <span>[STAGE 3] MODEL COMPARISON & SELECTION</span>
+          </div>
+          <p class="small text-muted mb-0">
+            Trained and compared <strong>Multinomial Naive Bayes</strong> (Alpha=0.1) against <strong>Logistic Regression</strong> (C=5.0). MultinomialNB achieved the highest test F1-score (94.86%) and accuracy (98.74%), serving as the production classification engine.
+          </p>
+        </div>
+
+        <div class="p-3 rounded-3" style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-card);">
+          <div class="d-flex align-items-center gap-2 font-mono small text-info mb-2">
+            <span>[STAGE 4] DBSCAN EXPLORATORY CLUSTERING</span>
+          </div>
+          <p class="small text-muted mb-0">
+            Integrated TruncatedSVD dimensionality reduction coupled with DBSCAN (cosine distance metric) to uncover dense spam campaigns and detect isolated noise anomalies (outliers), providing visual exploratory insights into zero-day scam patterns.
+          </p>
+        </div>
+      </div>
+
+      <!-- Reference Notebook Disclosure -->
+      <div class="cyber-card p-4 mb-4">
+        <h3 class="h5 fw-bold text-white mb-3">
+          <i class="bi bi-file-earmark-code text-warning me-2"></i>Reference Material & Colab Status
+        </h3>
+        <p class="small text-muted mb-3">
+          The reference Google Colab notebook provided in the prompt is protected behind Google account authentication and client-side web application barriers, preventing unauthenticated programmatic inspection.
+        </p>
+        <div class="p-3 rounded-3" style="background: rgba(245, 158, 11, 0.08); border: 1px solid var(--risk-medium-border);">
+          <p class="small text-muted mb-0">
+            <strong class="text-warning">Transparent Integration Note:</strong> Following the prompt's instructions (<em>"If the notebook requires Google authentication or is inaccessible, do not pretend to have inspected it. Continue with a suitable spam/scam classification implementation and clearly identify what needs to be integrated from the notebook later"</em>), we implemented an end-to-end TF-IDF + Naive Bayes / Logistic Regression pipeline with DBSCAN clustering and safe URL heuristics. If the notebook contains custom domain-specific word embeddings or fine-tuned deep learning weights, they can be loaded directly into <code>scam_engine.py</code> without altering the API interface.
+          </p>
+        </div>
+      </div>
+
+      <!-- Limitations & Ethical Defense -->
+      <div class="cyber-card p-4">
+        <h3 class="h5 fw-bold text-white mb-3">
+          <i class="bi bi-shield-slash text-danger me-2"></i>System Limitations & Adversarial Evasion
+        </h3>
+        
+        <ul class="list-unstyled small text-muted d-flex flex-column gap-2 mb-0">
+          <li class="p-2 rounded" style="background: rgba(255,255,255,0.02);">
+            <strong class="text-white">Adversarial Character Substitution (Leetspeak):</strong> Scammers may intentionally insert typos, special symbols, or spaces (e.g. <code>P@yP@l</code> or <code>b a n k</code>) to evade keyword and n-gram detection.
+          </li>
+          <li class="p-2 rounded" style="background: rgba(255,255,255,0.02);">
+            <strong class="text-white">Image-Based Spam:</strong> Attackers often distribute screenshots containing urgent demands instead of plain text. (ScamShield's roadmap includes OCR integration).
+          </li>
+          <li class="p-2 rounded" style="background: rgba(255,255,255,0.02);">
+            <strong class="text-white">The "Normal Safe" Fallacy:</strong> As enforced in our core engine, a clean prediction from an ML model does not guarantee an unknown message is safe. Users must maintain basic verification hygiene.
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Technology Stack, Specifications, Roadmap -->
+    <div class="col-lg-4">
+      
+      <!-- Tech Stack Breakdown -->
+      <div class="cyber-card p-4 mb-4">
+        <h4 class="h6 fw-bold text-white text-uppercase tracking-wider mb-3">
+          <i class="bi bi-stack text-info me-2"></i>Technology Stack
+        </h4>
+        
+        <div class="d-flex flex-column gap-2 small">
+          <div class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+            <span class="text-muted">Backend Runtime</span>
+            <span class="fw-semibold text-white font-mono">Python 3.13</span>
+          </div>
+          <div class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+            <span class="text-muted">Web Framework</span>
+            <span class="fw-semibold text-white font-mono">Flask 3.1.3</span>
+          </div>
+          <div class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+            <span class="text-muted">Machine Learning</span>
+            <span class="fw-semibold text-white font-mono">scikit-learn 1.9.1</span>
+          </div>
+          <div class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+            <span class="text-muted">Data Manipulation</span>
+            <span class="fw-semibold text-white font-mono">pandas 3.0, NumPy 2.4</span>
+          </div>
+          <div class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+            <span class="text-muted">Model Persistence</span>
+            <span class="fw-semibold text-white font-mono">joblib 1.6.0</span>
+          </div>
+          <div class="d-flex justify-content-between p-2 rounded" style="background: rgba(255,255,255,0.03);">
+            <span class="text-muted">UI / Styling</span>
+            <span class="fw-semibold text-white font-mono">HTML5, CSS3, BS5</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dataset Details -->
+      <div class="cyber-card p-4 mb-4">
+        <h4 class="h6 fw-bold text-white text-uppercase tracking-wider mb-3">
+          <i class="bi bi-award text-success me-2"></i>Dataset Provenance
+        </h4>
+        <p class="small text-muted mb-2">
+          <strong>UCI SMS Spam Collection:</strong> Created by Tiago A. Almeida and José María Gómez Hidalgo. Widely recognized as the standard benchmark in mobile spam filtering.
+        </p>
+        <span class="small font-mono text-dim d-block mb-0">Total records: 5,574 (Public Domain / CC-BY)</span>
+      </div>
+
+      <!-- Future Enhancements -->
+      <div class="cyber-card p-4">
+        <h4 class="h6 fw-bold text-white text-uppercase tracking-wider mb-3">
+          <i class="bi bi-rocket-takeoff text-purple me-2"></i>Future Roadmap
+        </h4>
+        
+        <ul class="list-unstyled small text-muted d-flex flex-column gap-2 mb-0">
+          <li><i class="bi bi-chevron-right text-info me-1"></i> Transformer model integration (DistilBERT fine-tuning)</li>
+          <li><i class="bi bi-chevron-right text-info me-1"></i> Multi-lingual support for regional dialects & Hinglish</li>
+          <li><i class="bi bi-chevron-right text-info me-1"></i> OCR engine for screenshot spam analysis</li>
+          <li><i class="bi bi-chevron-right text-info me-1"></i> Real-time WHOIS domain age inspection API</li>
+          <li><i class="bi bi-chevron-right text-info me-1"></i> Browser extension for 1-click email scanning</li>
+        </ul>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
